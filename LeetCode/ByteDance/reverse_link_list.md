@@ -7,6 +7,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ // 迭代版本
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
@@ -14,8 +15,24 @@ public:
 
         while (cur) {
             ListNode *n = cur->next;
-            
+            cur->next = pre;
+            pre = cur;
+            cur = n;
         }
+
+        return pre;
     }
 };
+// 递归版本
+class Solution {
+public:
+    ListNode** reverseList(ListNode* head) {
+        if (head->next) {
+            ListNode **ret = reverseList(head->next);
+            (*ret)->next = head;
+        }
+        return &head;
+    }
+};
+
 ```
