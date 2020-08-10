@@ -211,3 +211,32 @@
         }
     };
     ```
+
+4. [删除链表的倒数第N个节点](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+
+    有了前面的铺垫以后，这道题其实就很简单了，思路跟反转链表是一样的，用递归。
+    递归的返回值是：当前节点的倒数 index
+    递归的退出条件是：找到链表的最后一个节点，返回 1
+    提柜的函数体是：判断当前节点的 next 节点是否是目标的倒数节点，如果是那么直接就移除：`cur->next = cur->next->next`
+    边界条件是：如果要删除的节点是头节点，只需要对这种情况进行特殊处理。因为递归函数的返回值是当前节点的倒数 index，因此如果目标节点是头结点，那么函数的返回值一定跟倒数值是一样的，这样就可以找到这种情况，直接返回 `head->next` 即可。
+
+    ```cpp
+    class Solution {
+    public:
+        int solve(ListNode*& head, int n) {
+            if (!head->next)
+                return 1;
+            int ret = solve(head->next, n);
+            if (ret == n) {
+                head->next = head->next->next;
+            }
+            return ret+1;
+        }
+        ListNode* removeNthFromEnd(ListNode* head, int n) {
+            if (!head)
+                return NULL;
+            int ret = solve(head, n);
+            return (ret==n) ? head->next : head;
+        }
+    };
+    ```
