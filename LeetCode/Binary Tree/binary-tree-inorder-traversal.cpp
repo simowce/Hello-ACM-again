@@ -7,6 +7,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+// 迭代实现
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
@@ -28,6 +29,21 @@ public:
             if (t->right)
                 node.push(t->right);
         }
+
+        return ans;
+    }
+};
+
+// 递归实现
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        static vector<int> ans;
+        if (!root)
+            return ans;
+        inorderTraversal(root->left);
+        ans.push_back(root->val);
+        inorderTraversal(root->right);
 
         return ans;
     }
