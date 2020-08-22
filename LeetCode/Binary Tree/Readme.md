@@ -13,6 +13,8 @@
 
 2. [前序遍历](6)
 
+    迭代的实现思路是：使用一个栈保留当前的节点的右节点。
+
     ```cpp
     /**
      * Definition for a binary tree node.
@@ -36,9 +38,11 @@
             while (cur) {
                 ans.push_back(cur->val);
                 if (cur->left) {
-                    cur = cur->left;
                     if (cur->right)
                         node.push(cur->right);
+                    // 这里需要注意，要把 right 保存以后再修改 cur
+                    // 因为写反了导致这里卡了好久好久
+                    cur = cur->left;
                 } else if (cur->right) {
                     cur = cur->right;
                 } else {
